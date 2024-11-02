@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: MatchApplication
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/match_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    enabled: false
+    change-log: classpath:liquibase/db.changelog-master.xml
+
+logging:
+  level:
+    org.springframework: INFO
