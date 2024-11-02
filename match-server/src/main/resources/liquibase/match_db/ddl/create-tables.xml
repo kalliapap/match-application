@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-match-table" author="match" runOnChange="true"
+               runAlways="false" failOnError="true">
+
+        <createSequence sequenceName="match_seq" minValue="1" incrementBy="1" startValue="1"/>
+
+        <createTable tableName="match">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="match_pk"/>
+            </column>
+            <column name="description" type="NVARCHAR(255)"/>
+            <column name="match_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="match_time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="team_a" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="team_b" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sport" type="NVARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-match-odds-table" author="match" runOnChange="true"
+               runAlways="false" failOnError="true">
+
+        <createSequence sequenceName="match_odds_seq" minValue="1" incrementBy="1" startValue="1"/>
+
+        <createTable tableName="match_odds">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="match_odds_pk"/>
+            </column>
+            <column name="match_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specifier" type="NVARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="odd" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="match_odds"
+                baseColumnNames="match_id"
+                referencedTableName="match"
+                referencedColumnNames="id"
+                constraintName="match_odds_fk"/>
+    </changeSet>
+
+</databaseChangeLog>
+
+
+
