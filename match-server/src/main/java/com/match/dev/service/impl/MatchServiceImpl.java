@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -65,8 +66,29 @@ public class MatchServiceImpl implements MatchService, CommonValidator<Match> {
     }
 
     @Override
-    public List<MatchDto> findAll() {
-        return List.of();
+    public List<MatchDto> findAllMatches() throws MatchServiceException {
+        try {
+
+            List<Match> matches = matchRepository.findAll();
+
+            return matches.stream()
+                    .map(match -> new MatchDto.Builder()
+                            .withId(match.getId())
+                            .withDescription(match.getDescription())
+                            .withMatchDate(match.getMatchDate())
+                            .withMatchTime(match.getMatchTime())
+                            .withTeamA(match.getTeamA())
+                            .withTeamB(match.getTeamB())
+                            .withSport(match.getSport())
+                            .withMatchOdds(toMatchOddsDto(match.getMatchOdds()))
+                            .build()
+                    )
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            log.error("Failed to fetch all matches: {}", e.getMessage());
+            throw new MatchServiceException();
+        }
     }
 
     @Override

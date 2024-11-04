@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/match")
 public class MatchController {
@@ -29,7 +31,14 @@ public class MatchController {
                 .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), response));
     }
 
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/all")
+    public ResponseEntity<ApiResponseDto<List<MatchDto>>> getAllMatches() throws MatchServiceException, MatchNotFoundException {
+        List<MatchDto> response = matchService.findAllMatches();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), response));
+    }
+
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ApiResponseDto<MatchDto>> getMatchById(@PathVariable long id) throws MatchServiceException, MatchNotFoundException {
         MatchDto response = matchService.findMatchById(id);
         return ResponseEntity.status(HttpStatus.OK)

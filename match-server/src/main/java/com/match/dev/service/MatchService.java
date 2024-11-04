@@ -13,7 +13,7 @@ public interface MatchService {
 
     MatchResponseDto createMatch(MatchDto matchDto) throws MatchAlreadyExistsException, MatchServiceException;
 
-    List<MatchDto> findAll();
+    List<MatchDto> findAllMatches() throws MatchServiceException;
 
     MatchDto findMatchById(long id) throws MatchServiceException, MatchNotFoundException;
 
