@@ -8,7 +8,7 @@ public class MatchOdds {
     @Id
     @SequenceGenerator(name = "match_odds_seq", sequenceName = "match_odds_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_odds_seq")
-    private Long id;
+    private long id;
 
     private String specifier;
 
@@ -18,11 +18,20 @@ public class MatchOdds {
     @JoinColumn(name = "match_id")
     private Match match;
 
-    public Long getId() {
+    public MatchOdds() {
+    }
+
+    private MatchOdds(Builder builder) {
+        setId(builder.id);
+        setSpecifier(builder.specifier);
+        setOdd(builder.odd);
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -48,5 +57,36 @@ public class MatchOdds {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public static class Builder {
+        private long id;
+        private String specifier;
+        private float odd;
+        private Match match;
+
+        public Builder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withSpecifier(String specifier) {
+            this.specifier = specifier;
+            return this;
+        }
+
+        public Builder withOdd(float odd) {
+            this.odd = odd;
+            return this;
+        }
+
+        public Builder withMatch(Match match) {
+            this.match = match;
+            return this;
+        }
+
+        public MatchOdds build() {
+            return new MatchOdds(this);
+        }
     }
 }

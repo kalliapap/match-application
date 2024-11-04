@@ -1,44 +1,46 @@
-package com.match.dev.entity;
+package com.match.dev.dto;
 
 import com.match.dev.enumeration.SportEnum;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Entity
-public class Match {
+public class MatchDto implements Serializable {
 
-    @Id
-    @SequenceGenerator(name = "match_seq", sequenceName = "match_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
+    @Serial
+    private static final long serialVersionUID = 2022897496435044550L;
+
     private long id;
 
     private String description;
 
-    @Column(name = "match_date", nullable = false)
+    @NotNull
     private LocalDate matchDate;
 
-    @Column(name = "match_time", nullable = false)
+    @NotNull
     private LocalTime matchTime;
 
-    @Column(name = "team_a")
+    @NotNull
     private String teamA;
 
-    @Column(name = "team_b")
+    @NotNull
     private String teamB;
 
-    @Enumerated(EnumType.ORDINAL)
+    @NotNull
     private SportEnum sport;
 
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MatchOdds> matchOdds;
+    @NotNull
+    private List<MatchOddsDto> matchOdds;
 
-    public Match() {
+    public MatchDto() {
     }
 
-    private Match(Match.Builder builder){
+    private MatchDto(Builder builder){
+        setId(builder.id);
         setDescription(builder.description);
         setMatchDate(builder.matchDate);
         setMatchTime(builder.matchTime);
@@ -64,51 +66,51 @@ public class Match {
         this.description = description;
     }
 
-    public LocalDate getMatchDate() {
+    public @NotNull LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(LocalDate matchDate) {
+    public void setMatchDate(@NotNull LocalDate matchDate) {
         this.matchDate = matchDate;
     }
 
-    public LocalTime getMatchTime() {
+    public @NotNull LocalTime getMatchTime() {
         return matchTime;
     }
 
-    public void setMatchTime(LocalTime matchTime) {
+    public void setMatchTime(@NotNull LocalTime matchTime) {
         this.matchTime = matchTime;
     }
 
-    public String getTeamA() {
+    public @NotNull String getTeamA() {
         return teamA;
     }
 
-    public void setTeamA(String teamA) {
+    public void setTeamA(@NotNull String teamA) {
         this.teamA = teamA;
     }
 
-    public String getTeamB() {
+    public @NotNull String getTeamB() {
         return teamB;
     }
 
-    public void setTeamB(String teamB) {
+    public void setTeamB(@NotNull String teamB) {
         this.teamB = teamB;
     }
 
-    public SportEnum getSport() {
+    public @NotNull SportEnum getSport() {
         return sport;
     }
 
-    public void setSport(SportEnum sport) {
+    public void setSport(@NotNull SportEnum sport) {
         this.sport = sport;
     }
 
-    public List<MatchOdds> getMatchOdds() {
+    public @NotNull List<MatchOddsDto> getMatchOdds() {
         return matchOdds;
     }
 
-    public void setMatchOdds(List<MatchOdds> matchOdds) {
+    public void setMatchOdds(@NotNull List<MatchOddsDto> matchOdds) {
         this.matchOdds = matchOdds;
     }
 
@@ -120,7 +122,7 @@ public class Match {
         private String teamA;
         private String teamB;
         private SportEnum sport;
-        private List<MatchOdds> matchOdds;
+        private List<MatchOddsDto> matchOdds;
 
         public Builder withId(long id) {
             this.id = id;
@@ -157,13 +159,13 @@ public class Match {
             return this;
         }
 
-        public Builder withMatchOdds(List<MatchOdds> matchOdds) {
+        public Builder withMatchOdds(List<MatchOddsDto> matchOdds) {
             this.matchOdds = matchOdds;
             return this;
         }
 
-        public Match build() {
-            return new Match(this);
+        public MatchDto build() {
+            return new MatchDto(this);
         }
     }
 }

@@ -1,44 +1,35 @@
-package com.match.dev.entity;
+package com.match.dev.dto;
 
 import com.match.dev.enumeration.SportEnum;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Entity
-public class Match {
+public class MatchUpdateRequestDto implements Serializable {
 
-    @Id
-    @SequenceGenerator(name = "match_seq", sequenceName = "match_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_seq")
+    @Serial
+    private static final long serialVersionUID = 2022897496435044550L;
+
+    @NotNull
     private long id;
-
     private String description;
-
-    @Column(name = "match_date", nullable = false)
     private LocalDate matchDate;
-
-    @Column(name = "match_time", nullable = false)
     private LocalTime matchTime;
-
-    @Column(name = "team_a")
     private String teamA;
-
-    @Column(name = "team_b")
     private String teamB;
-
-    @Enumerated(EnumType.ORDINAL)
     private SportEnum sport;
 
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MatchOdds> matchOdds;
+    private List<MatchOddsDto> matchOdds;
 
-    public Match() {
+    public MatchUpdateRequestDto() {
     }
 
-    private Match(Match.Builder builder){
+    private MatchUpdateRequestDto(Builder builder) {
+        setId(builder.id);
         setDescription(builder.description);
         setMatchDate(builder.matchDate);
         setMatchTime(builder.matchTime);
@@ -48,11 +39,12 @@ public class Match {
         setMatchOdds(builder.matchOdds);
     }
 
+    @NotNull
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(@NotNull long id) {
         this.id = id;
     }
 
@@ -104,15 +96,16 @@ public class Match {
         this.sport = sport;
     }
 
-    public List<MatchOdds> getMatchOdds() {
+    public List<MatchOddsDto> getMatchOdds() {
         return matchOdds;
     }
 
-    public void setMatchOdds(List<MatchOdds> matchOdds) {
+    public void setMatchOdds(List<MatchOddsDto> matchOdds) {
         this.matchOdds = matchOdds;
     }
 
     public static class Builder {
+
         private long id;
         private String description;
         private LocalDate matchDate;
@@ -120,7 +113,7 @@ public class Match {
         private String teamA;
         private String teamB;
         private SportEnum sport;
-        private List<MatchOdds> matchOdds;
+        private List<MatchOddsDto> matchOdds;
 
         public Builder withId(long id) {
             this.id = id;
@@ -157,13 +150,13 @@ public class Match {
             return this;
         }
 
-        public Builder withMatchOdds(List<MatchOdds> matchOdds) {
+        public Builder withMatchOdds(List<MatchOddsDto> matchOdds) {
             this.matchOdds = matchOdds;
             return this;
         }
 
-        public Match build() {
-            return new Match(this);
+        public MatchUpdateRequestDto build() {
+            return new MatchUpdateRequestDto(this);
         }
     }
 }
