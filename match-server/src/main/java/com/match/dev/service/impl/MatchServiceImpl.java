@@ -46,7 +46,7 @@ public class MatchServiceImpl implements MatchService, CommonValidator<Match> {
 
         try {
             if (this.matchRepository.findByTeamAAndTeamBAndMatchDateAndSport(matchDto.getTeamA(), matchDto.getTeamB(),
-                    matchDto.getMatchDate(), matchDto.getSport()).isPresent()) {
+                    matchDto.getMatchDate(), matchDto.getSport().getDbValue()).isPresent()) {
                 throw new MatchAlreadyExistsException("Creation failed. Match already exists!");
             }
 

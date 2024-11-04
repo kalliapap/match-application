@@ -8,7 +8,7 @@
     <changeSet id="alter-match-sport-col-type" author="match" runOnChange="true"
                runAlways="false" failOnError="true">
 
-        <modifyDataType tableName="match" columnName="sport" newDataType="SMALLINT"/>
+        <modifyDataType tableName="match" columnName="sport" newDataType="INTEGER"/>
 
     </changeSet>
 </databaseChangeLog>

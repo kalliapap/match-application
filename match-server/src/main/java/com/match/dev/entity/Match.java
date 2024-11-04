@@ -29,8 +29,7 @@ public class Match {
     @Column(name = "team_b")
     private String teamB;
 
-    @Enumerated(EnumType.ORDINAL)
-    private SportEnum sport;
+    private Integer sport;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MatchOdds> matchOdds;
@@ -96,12 +95,12 @@ public class Match {
         this.teamB = teamB;
     }
 
-    public SportEnum getSport() {
-        return sport;
+    public void setSport(SportEnum sportEnum) {
+        this.sport = sportEnum.getDbValue();
     }
 
-    public void setSport(SportEnum sport) {
-        this.sport = sport;
+    public SportEnum getSport() {
+        return SportEnum.fromDbValue(sport);
     }
 
     public List<MatchOdds> getMatchOdds() {
