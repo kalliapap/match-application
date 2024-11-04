@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class MatchServiceConfiguration {
 
     @Bean
-    public MatchService matchService(MatchRepository matchRepository) {
-        return new MatchServiceImpl(matchRepository);
+    public MatchService matchService(MatchRepository matchRepository, MatchOddsRepository matchOddsRepository) {
+        return new MatchServiceImpl(matchRepository, matchOddsRepository);
     }
 
     @Bean
