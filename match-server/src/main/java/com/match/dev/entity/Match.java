@@ -31,7 +31,8 @@ public class Match {
 
     private Integer sport;
 
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "match_id", nullable = false)
     private List<MatchOdds> matchOdds;
 
     public Match() {

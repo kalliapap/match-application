@@ -15,7 +15,7 @@ public class MatchOdds {
     private float odd;
 
     @ManyToOne
-    @JoinColumn(name = "match_id")
+    @JoinColumn(name = "match_id", nullable = false, insertable=false, updatable=false)
     private Match match;
 
     public MatchOdds() {
@@ -25,6 +25,7 @@ public class MatchOdds {
         setId(builder.id);
         setSpecifier(builder.specifier);
         setOdd(builder.odd);
+        setMatch(builder.match);
     }
 
     public long getId() {

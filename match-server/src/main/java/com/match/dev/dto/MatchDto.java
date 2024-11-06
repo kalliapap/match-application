@@ -1,6 +1,7 @@
 package com.match.dev.dto;
 
 import com.match.dev.enumeration.SportEnum;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
@@ -19,6 +20,7 @@ public class MatchDto implements Serializable {
     private String description;
 
     @NotNull
+    @FutureOrPresent
     private LocalDate matchDate;
 
     @NotNull
@@ -34,7 +36,7 @@ public class MatchDto implements Serializable {
     private SportEnum sport;
 
     @NotNull
-    private List<MatchOddsDto> matchOdds;
+    private List<MatchOddDto> matchOdds;
 
     public MatchDto() {
     }
@@ -106,11 +108,11 @@ public class MatchDto implements Serializable {
         this.sport = sport;
     }
 
-    public @NotNull List<MatchOddsDto> getMatchOdds() {
+    public @NotNull List<MatchOddDto> getMatchOdds() {
         return matchOdds;
     }
 
-    public void setMatchOdds(@NotNull List<MatchOddsDto> matchOdds) {
+    public void setMatchOdds(@NotNull List<MatchOddDto> matchOdds) {
         this.matchOdds = matchOdds;
     }
 
@@ -122,7 +124,7 @@ public class MatchDto implements Serializable {
         private String teamA;
         private String teamB;
         private SportEnum sport;
-        private List<MatchOddsDto> matchOdds;
+        private List<MatchOddDto> matchOdds;
 
         public Builder withId(long id) {
             this.id = id;
@@ -159,7 +161,7 @@ public class MatchDto implements Serializable {
             return this;
         }
 
-        public Builder withMatchOdds(List<MatchOddsDto> matchOdds) {
+        public Builder withMatchOdds(List<MatchOddDto> matchOdds) {
             this.matchOdds = matchOdds;
             return this;
         }
