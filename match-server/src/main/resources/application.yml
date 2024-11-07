@@ -9,6 +9,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   liquibase:
     enabled: true
@@ -19,3 +22,8 @@ logging:
     org.springframework: INFO
 server:
   port: 8180
+springdoc:
+  packages-to-scan: com.match.dev.controller
+  swagger-ui:
+    operations-sorter: method
+    path: /openapi/index.html
