@@ -47,22 +47,23 @@ public class MatchOddsServiceImpl implements MatchOddsService {
                     .orElseThrow(() -> new MatchNotFoundException("Cannot add odd to a non-existing match!"));
 
             MatchOdds matchOdds = new MatchOdds.Builder()
-                    .withMatch(match)
                     .withSpecifier(matchOddRequestDto.getSpecifier())
                     .withOdd(matchOddRequestDto.getOdd())
                     .build();
             MatchUtils.isSpecifierValid(matchOdds.getSpecifier());
             MatchUtils.isOddValid(matchOdds.getOdd());
+            match.getMatchOdds().add(matchOdds);
+            matchOdds.setMatch(match);
+            MatchOdds odds = this.matchOddsRepository.save(matchOdds);
 
-            this.matchOddsRepository.save(matchOdds);
-
+            return MatchUtils.toMatchOddsDto(odds);
         } catch (MatchNotFoundException e) {
             throw new MatchNotFoundException(e.getMessage());
         } catch (Exception e) {
             log.error("Failed to add match odd: {}", e.getMessage());
             throw new MatchServiceException();
         }
-        return null;
+
     }
 
     @Override

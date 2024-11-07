@@ -12,8 +12,7 @@ public class MatchOddRequestDto implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private Long matchId;
+    private long matchId;
 
     @NotNull
     private String specifier;
@@ -40,11 +39,11 @@ public class MatchOddRequestDto implements Serializable {
         this.id = id;
     }
 
-    public @NotNull Long getMatchId() {
+    public long getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(@NotNull Long matchId) {
+    public void setMatchId(long matchId) {
         this.matchId = matchId;
     }
 

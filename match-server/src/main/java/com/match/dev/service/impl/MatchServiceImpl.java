@@ -127,14 +127,9 @@ public class MatchServiceImpl implements MatchService {
             Match match = this.matchRepository.findById(newMatch.getId())
                     .orElseThrow(() -> new MatchNotFoundException("Match not found with id: " + newMatch.getId()));
 
-            // todo getting error cascade orphan if no matchodds sent in the request
-            Match updatedMatch = this.updateEntity(match.getId(), newMatch);
+            Match updatedMatch = this.updateEntity(match, newMatch);
 
-            if (updatedMatch.getMatchOdds() != null) {
-                matchOddsRepository.saveAll(updatedMatch.getMatchOdds());
-            }
             matchRepository.save(updatedMatch);
-
         } catch (MatchNotFoundException e) {
             throw new MatchNotFoundException(e.getMessage());
         } catch (MatchOddValidationFailedException e) {
@@ -145,34 +140,23 @@ public class MatchServiceImpl implements MatchService {
         }
     }
 
-    private Match updateEntity(long matchId, MatchUpdateRequestDto newMatch) throws MatchOddNotFoundException, MatchOddValidationFailedException {
+        private Match updateEntity(Match oldMatch, MatchUpdateRequestDto newMatch) throws MatchOddNotFoundException, MatchOddValidationFailedException {
         Match match = new Match();
-        match.setId(matchId);
-        if (StringUtils.isNotEmpty(newMatch.getDescription())) {
-            match.setDescription(newMatch.getDescription());
-        }
-        if (newMatch.getMatchDate() != null) {
-            match.setMatchDate(newMatch.getMatchDate());
-        }
-        if (newMatch.getMatchTime() != null) {
-            match.setMatchTime(newMatch.getMatchTime());
-        }
-        if (StringUtils.isNotEmpty(newMatch.getTeamA())) {
-            match.setTeamA(newMatch.getTeamA());
-        }
-        if (StringUtils.isNotEmpty(newMatch.getTeamB())) {
-            match.setTeamB(newMatch.getTeamB());
-        }
-        if (newMatch.getSport() != null) {
-            match.setSport(newMatch.getSport());
-        }
-        if (newMatch.getMatchOdds() != null) {
-            match.setMatchOdds(updateMatchOdds(matchId, newMatch.getMatchOdds()));
-        }
+
+        match.setId(oldMatch.getId());
+        match.setDescription(StringUtils.isNotEmpty(newMatch.getDescription()) ? newMatch.getDescription() : oldMatch.getDescription());
+        match.setMatchDate(newMatch.getMatchDate() != null ? newMatch.getMatchDate() : oldMatch.getMatchDate());
+        match.setMatchTime(newMatch.getMatchTime() != null ? newMatch.getMatchTime() : oldMatch.getMatchTime());
+        match.setTeamA(StringUtils.isNotEmpty(newMatch.getTeamA()) ? newMatch.getTeamA() : oldMatch.getTeamA());
+        match.setTeamB(StringUtils.isNotEmpty(newMatch.getTeamB()) ? newMatch.getTeamB() : oldMatch.getTeamB());
+        match.setSport(newMatch.getSport() != null ? newMatch.getSport() : oldMatch.getSport());
+        match.setMatchOdds(newMatch.getMatchOdds() != null && !newMatch.getMatchOdds().isEmpty() ?
+                updateMatchOdds(oldMatch.getId(), newMatch.getMatchOdds()) : oldMatch.getMatchOdds());
+
         return match;
     }
 
-    private List<MatchOdds>  updateMatchOdds(long matchId, List<MatchOddDto> matchOddDtoList) throws MatchOddNotFoundException, MatchOddValidationFailedException {
+    private List<MatchOdds> updateMatchOdds(long matchId, List<MatchOddDto> matchOddDtoList) throws MatchOddNotFoundException, MatchOddValidationFailedException {
         List<MatchOdds> odds = new ArrayList<>();
         for (MatchOddDto odd : matchOddDtoList) {
             MatchOdds updatedMatchOdds = new MatchOdds();
