@@ -91,13 +91,23 @@ public class MatchUtils {
 
     public static void validateOdds(List<MatchOddDto> odds) throws MatchOddValidationFailedException {
         for (MatchOddDto odd : odds) {
-            if ((odd.getOdd() <= 0 || !isSpecifierValid(odd.getSpecifier()))) {
+            if (!isOddValid(odd.getOdd()) || !isSpecifierValid(odd.getSpecifier())) {
                 throw new MatchOddValidationFailedException("Invalid odd or specifier!");
             }
         }
     }
 
-    public static boolean isSpecifierValid(String value) {
-        return specifiers.contains(value);
+    public static boolean isSpecifierValid(String value) throws MatchOddValidationFailedException {
+        if (!specifiers.contains(value)) {
+            throw new MatchOddValidationFailedException("Invalid Specifier!");
+        }
+        return true;
+    }
+
+    public static boolean isOddValid(float odd) throws MatchOddValidationFailedException {
+        if (odd <= 0 ) {
+            throw new MatchOddValidationFailedException("Odd must be a positive number!");
+        }
+        return true;
     }
 }
