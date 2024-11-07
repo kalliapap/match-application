@@ -23,7 +23,7 @@ public class MatchUpdateRequestDto implements Serializable {
     private String teamB;
     private SportEnum sport;
 
-    private List<MatchOddsDto> matchOdds;
+    private List<MatchOddDto> matchOdds;
 
     public MatchUpdateRequestDto() {
     }
@@ -96,11 +96,11 @@ public class MatchUpdateRequestDto implements Serializable {
         this.sport = sport;
     }
 
-    public List<MatchOddsDto> getMatchOdds() {
+    public List<MatchOddDto> getMatchOdds() {
         return matchOdds;
     }
 
-    public void setMatchOdds(List<MatchOddsDto> matchOdds) {
+    public void setMatchOdds(List<MatchOddDto> matchOdds) {
         this.matchOdds = matchOdds;
     }
 
@@ -113,7 +113,7 @@ public class MatchUpdateRequestDto implements Serializable {
         private String teamA;
         private String teamB;
         private SportEnum sport;
-        private List<MatchOddsDto> matchOdds;
+        private List<MatchOddDto> matchOdds;
 
         public Builder withId(long id) {
             this.id = id;
@@ -150,7 +150,7 @@ public class MatchUpdateRequestDto implements Serializable {
             return this;
         }
 
-        public Builder withMatchOdds(List<MatchOddsDto> matchOdds) {
+        public Builder withMatchOdds(List<MatchOddDto> matchOdds) {
             this.matchOdds = matchOdds;
             return this;
         }

@@ -1,17 +1,20 @@
 package com.match.dev.service;
 
-import com.match.dev.dto.MatchOddsDto;
-import com.match.dev.entity.Match;
+import com.match.dev.dto.MatchOddDto;
+import com.match.dev.dto.MatchOddRequestDto;
+import com.match.dev.exception.MatchNotFoundException;
+import com.match.dev.exception.MatchOddNotFoundException;
+import com.match.dev.exception.MatchServiceException;
 
 import java.util.List;
 
 public interface MatchOddsService {
 
-    MatchOddsDto save(MatchOddsDto matchOddsDto);
+    MatchOddDto createOdd(MatchOddRequestDto matchOddRequestDto) throws MatchNotFoundException, MatchServiceException;
 
-    List<MatchOddsDto> findAll();
+    List<MatchOddDto> findAll() throws MatchServiceException;
 
-    boolean delete(Match match);
+    void deleteOdd(long id) throws MatchServiceException, MatchOddNotFoundException;
 
-    MatchOddsDto update(MatchOddsDto matchOddsDto);
+    void updateOdd(MatchOddDto matchOddDto) throws MatchOddNotFoundException, MatchServiceException;
 }
