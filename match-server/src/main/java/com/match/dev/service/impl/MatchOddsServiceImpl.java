@@ -12,7 +12,6 @@ import com.match.dev.repository.MatchOddsRepository;
 import com.match.dev.repository.MatchRepository;
 import com.match.dev.service.MatchOddsService;
 import com.match.dev.util.MatchUtils;
-import jakarta.validation.Validator;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +29,6 @@ public class MatchOddsServiceImpl implements MatchOddsService {
 
     private final MatchRepository matchRepository;
     private final MatchOddsRepository matchOddsRepository;
-
-    @Autowired
-    private Validator validator;
 
     public MatchOddsServiceImpl(MatchOddsRepository matchOddsRepository, MatchRepository matchRepository) {
         this.matchOddsRepository = matchOddsRepository;
